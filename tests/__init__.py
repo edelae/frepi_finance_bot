@@ -1,0 +1,1 @@
+"""Frepi Finance Agent tests."""

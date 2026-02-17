@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "frepi-finance"
+version = "0.1.0"
+description = "Frepi Finance Agent - Restaurant Financial Intelligence"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0.0",
+    "python-telegram-bot>=21.0",
+    "supabase>=2.0.0",
+    "httpx>=0.27.0",
+    "python-dotenv>=1.0.0",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "apscheduler>=3.10.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.scripts]
+frepi-finance = "frepi_finance.main:main"
+
+[tool.setuptools.packages.find]
+include = ["frepi_finance*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = "test_*.py"
