@@ -53,6 +53,11 @@ class Tables:
     MONTHLY_FINANCIAL_REPORTS = "monthly_financial_reports"
     PROMPT_COMPOSITION_LOG = "prompt_composition_log"
 
+    # Preference & engagement tables (shared across agents)
+    PREFERENCE_COLLECTION_QUEUE = "preference_collection_queue"
+    ENGAGEMENT_PROFILE = "engagement_profile"
+    PREFERENCE_CORRECTIONS = "preference_corrections"
+
 
 async def fetch_one(table: str, filters: dict[str, Any]) -> Optional[dict]:
     """Fetch a single record from a table."""

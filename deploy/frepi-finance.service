@@ -1,0 +1,27 @@
+[Unit]
+Description=Frepi Finance Bot - Restaurant Financial Intelligence
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/frepi-finance
+Environment=PATH=/opt/frepi-finance/venv/bin:/usr/local/bin:/usr/bin:/bin
+EnvironmentFile=/opt/frepi-finance/.env
+ExecStart=/opt/frepi-finance/venv/bin/python -m frepi_finance.main telegram
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=frepi-finance
+
+# Security
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/frepi-finance
+
+[Install]
+WantedBy=multi-user.target
