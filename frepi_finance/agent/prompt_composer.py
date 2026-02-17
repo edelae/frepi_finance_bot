@@ -62,6 +62,7 @@ def compose_prompt(
     intent_confidence: float,
     user_memory: Optional[dict] = None,
     db_context: Optional[str] = None,
+    drip_context: Optional[str] = None,
 ) -> ComposedPrompt:
     """
     Compose the final system prompt from all layers.
@@ -121,6 +122,14 @@ def compose_prompt(
             name="db_context",
             layer=3,
             content=f"## Dados Recentes\n{db_context}",
+        ))
+
+    # Layer 4: Drip Context (preference questions to sneak in)
+    if drip_context and intent != "onboarding":
+        components.append(PromptComponent(
+            name="drip_context",
+            layer=4,
+            content=drip_context,
         ))
 
     # Assemble final prompt respecting token limits

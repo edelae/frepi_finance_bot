@@ -22,7 +22,7 @@ ONBOARDING_TOOLS = [
                 "properties": {
                     "field": {
                         "type": "string",
-                        "enum": ["restaurant_name", "person_name", "is_owner", "relationship", "city", "state", "savings_opportunity"],
+                        "enum": ["restaurant_name", "person_name", "is_owner", "relationship", "city", "state", "savings_opportunity", "wants_invoice_upload", "engagement_choice"],
                         "description": "Which onboarding field to save"
                     },
                     "value": {
@@ -93,7 +93,9 @@ async def execute_onboarding_tool(tool_name: str, args: dict[str, Any], session)
                 "relationship": "city_state",
                 "city": "savings_opportunity",
                 "state": "savings_opportunity",
-                "savings_opportunity": "completed",
+                "savings_opportunity": "invoice_offer",
+                "wants_invoice_upload": "engagement_gauge",
+                "engagement_choice": "completed",
             }
             if field_name in phase_map:
                 update_data["current_phase"] = phase_map[field_name]

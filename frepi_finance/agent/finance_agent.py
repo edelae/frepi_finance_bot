@@ -77,12 +77,14 @@ class FinanceAgent:
         # Step 2: Compose prompt
         user_memory = await session.get_user_memory() if session.restaurant_id else None
         db_context = await self._build_db_context(session, intent_result.intent)
+        drip_context = await self._build_drip_context(session, intent_result.intent)
 
         composed = compose_prompt(
             intent=intent_result.intent,
             intent_confidence=intent_result.confidence,
             user_memory=user_memory,
             db_context=db_context,
+            drip_context=drip_context,
         )
 
         # Step 3: Set system prompt if new conversation or intent changed
@@ -195,6 +197,23 @@ class FinanceAgent:
             temperature=0.7,
         )
         return response
+
+    async def _build_drip_context(self, session, intent: str) -> Optional[str]:
+        """Build drip preference context if applicable."""
+        if not session.restaurant_id or intent == "onboarding":
+            return None
+
+        try:
+            from frepi_finance.services.preference_drip import get_drip_service
+
+            drip_service = get_drip_service()
+            questions = await drip_service.get_drip_questions(session.restaurant_id)
+            if questions:
+                return drip_service.format_drip_context(questions)
+        except Exception as e:
+            logger.warning(f"Failed to build drip context: {e}")
+
+        return None
 
     async def _build_db_context(self, session, intent: str) -> Optional[str]:
         """Build dynamic DB context string based on intent."""

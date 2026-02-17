@@ -12,6 +12,7 @@ from .monthly_tools import MONTHLY_TOOLS, execute_monthly_tool
 from .cmv_tools import CMV_TOOLS, execute_cmv_tool
 from .watchlist_tools import WATCHLIST_TOOLS, execute_watchlist_tool
 from .db_tools import DB_TOOLS, execute_db_tool
+from .preference_tools import PREFERENCE_TOOLS, execute_preference_tool
 
 # All tools available to GPT-4
 ALL_TOOLS = (
@@ -21,6 +22,7 @@ ALL_TOOLS = (
     + CMV_TOOLS
     + WATCHLIST_TOOLS
     + DB_TOOLS
+    + PREFERENCE_TOOLS
 )
 
 # Tool name to executor mapping
@@ -40,6 +42,7 @@ _register_tools(MONTHLY_TOOLS, execute_monthly_tool)
 _register_tools(CMV_TOOLS, execute_cmv_tool)
 _register_tools(WATCHLIST_TOOLS, execute_watchlist_tool)
 _register_tools(DB_TOOLS, execute_db_tool)
+_register_tools(PREFERENCE_TOOLS, execute_preference_tool)
 
 
 async def execute_tool(tool_name: str, args: dict[str, Any], session) -> dict:
